@@ -74,6 +74,8 @@ const getValidCode = () => {
 
 const handleLogin = () => {
   const loginStore = useLoginStore()
+  // console.log(loginForm)
+
   loginStore.login(loginForm)
 }
 

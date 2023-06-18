@@ -8,7 +8,7 @@ export const useChartStore = defineStore('chart', () => {
   async function getChartData(url: string) {
     const temp: any = await chartData(url)
     res.value = temp
-    console.log(res.value)
+    // console.log(res.value)
   }
   return { res, getChartData }
 })

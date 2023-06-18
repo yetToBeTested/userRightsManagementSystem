@@ -20,14 +20,14 @@ interface Idata {
   xdata: Array<any>
   Bento: Array<any>
   snack: Array<any>
-  bowl: []
-  dining: []
+  bowl: Array<any>
+  dining: Array<any>
 }
 
 const main = ref()
 const chartStore = useChartStore()
 
-const lineList: Idata = reactive({
+const lineList = reactive<Idata>({
   xdata: [],
   Bento: [],
   snack: [],

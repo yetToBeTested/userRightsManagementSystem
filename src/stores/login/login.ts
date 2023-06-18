@@ -8,7 +8,7 @@ import { login as loginApi, loginToken as loginTokenApi } from '@/api/login/logi
 // import { useMainStore } from '../main/main.ts'
 import { useMainStore } from '../main/main'
 import { localCache } from '@/utils/cache'
-import { LOGIN_TOKEN, MENU_LIST, ROLE_ID } from '@/global/constants'
+import { LOGIN_TOKEN, MENU_LIST, ROLE_ID, USER_INFO } from '@/global/constants'
 import type { RouteRecordRaw } from 'vue-router'
 import { getUserMenus } from '@/api/main/main'
 import { initMenu } from '@/utils/map-menu'
@@ -33,19 +33,20 @@ export const useLoginStore = defineStore('login', () => {
         type: 'success'
       })
     }
-    console.log(result)
+    // console.log(result)
     //个人信息
     localCache.setCache(LOGIN_TOKEN, result.data.token)
     localCache.setCache(ROLE_ID, result.data.roleId)
+    localCache.setCache(USER_INFO, result.data)
 
     //请求菜单信息
     menuList.value = await getUserMenus(result.data.roleId)
-    console.log('menuList', menuList.value.data)
+    // console.log('menuList', menuList.value.data)
     localCache.setCache(MENU_LIST, menuList.value.data)
 
     //初始化菜单信息
     userMenu.value = initMenu(menuList.value.data)
-    console.log('store/login', userMenu)
+    // console.log('store/login', userMenu)
     userMenu.value.forEach((item) => {
       item.children?.forEach((subitem) => {
         subitem.children = []
@@ -73,7 +74,7 @@ export const useLoginStore = defineStore('login', () => {
 
       //初始化菜单信息
       userMenu.value = initMenu(menuList.value)
-      console.log('stores/login.ts', userMenu.value)
+      // console.log('stores/login.ts', userMenu.value)
       // 动态添加路由
 
       // userMenu.value.forEach((item) => {

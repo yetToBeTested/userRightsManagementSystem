@@ -18,7 +18,7 @@ export const initMenu = (menu: any) => {
         } else {
           el.component = el.component.split('/')[0] + '/My' + el.component.split('/')[1]
           el.component = modules[`../views/main/${el.component}.vue`]
-          console.log('ultils/map-menu', modules, `../views/main/${el.component}.vue`)
+          
         }
         if (!firstMenu) {
           firstMenu = el

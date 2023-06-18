@@ -7,7 +7,9 @@ import router from './router'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 import { useLoginStore } from './stores/login/login'
 import { localCache } from './utils/cache'
-import { LOGIN_TOKEN } from './global/constants'
+import { LOGIN_TOKEN, USER_INFO } from './global/constants'
+
+import vTrack from '@/global/vTrack'
 
 // import './assets/main.css'
 
@@ -20,7 +22,13 @@ for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
 
 const loginStore = useLoginStore()
 loginStore.loadLocalCacheAction()
-
+const userName = localCache.getCache(USER_INFO)
 app.use(router)
-
+app.use(vTrack, {
+  baseParams: {
+    uid: userName.username,
+    userAgent: 'Chrome'
+  },
+  prefix: 'app'
+})
 app.mount('#app')

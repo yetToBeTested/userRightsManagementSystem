@@ -20,7 +20,7 @@ const { userMenu } = useLoginStore()
 // userMenu
 
 const breadcrumbs = computed(() => {
-  console.log(route.path)
+  // console.log(route.path)
   return mapPathToBreadcrumbs(route.path, userMenu)
 })
 </script>

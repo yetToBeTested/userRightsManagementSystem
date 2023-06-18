@@ -11,7 +11,7 @@ export const useMainStore = defineStore('main', () => {
     const res = await getAllRoles()
     roles.length = 0
     roles.push(...res.data)
-    console.log('store/main/main', roles)
+    // console.log('store/main/main', roles)
   }
 
   async function getAllUsers() {
