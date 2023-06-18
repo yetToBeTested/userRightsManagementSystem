@@ -24,11 +24,17 @@ const loginStore = useLoginStore()
 loginStore.loadLocalCacheAction()
 const userName = localCache.getCache(USER_INFO)
 app.use(router)
-app.use(vTrack, {
-  baseParams: {
-    uid: userName.username,
-    userAgent: 'Chrome'
+app.use(
+  vTrack,
+  {
+    baseParams: {
+      uid: userName.username,
+      userAgent: 'Chrome'
+    },
+    prefix: 'app'
   },
-  prefix: 'app'
-})
+  // ['/main/user', '/main/system/account', '/main/system/task']
+  [],
+  ['/main/user']
+)
 app.mount('#app')

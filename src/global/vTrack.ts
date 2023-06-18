@@ -2,7 +2,13 @@ import type { App } from 'vue'
 import { effect, reactive } from 'vue'
 
 //uv and pv
-const getVisitor = (app: any, prefix: string, baseParams: {}) => {
+const getVisitor = (
+  app: any,
+  prefix: string,
+  baseParams: {},
+  includes?: string[],
+  extenders?: string[]
+) => {
   const globalProperties = reactive(app.config.globalProperties)
   // const globalProperties = app.config.globalProperties
   let startTime = new Date().getTime()
@@ -15,8 +21,18 @@ const getVisitor = (app: any, prefix: string, baseParams: {}) => {
     lastPath = path
 
     path = globalProperties.$route.path
-    //间隔为0不上报
-    if (!TP) return
+    // console.log(extenders?.includes(path), includes?.includes(path), path)
+    console.log(extenders)
+
+    if ((extenders && extenders.includes(path)) || (includes.length && !includes.includes(path))) {
+      console.log('aa')
+
+      return
+    }
+
+    if (!TP)
+      //间隔为0不上报
+      return
     console.log({
       ...baseParams,
       UPVEventName: `${prefix}_${path}`
@@ -39,9 +55,11 @@ interface IType {
 }
 
 export default {
-  install: (app: App<Element>, options: IType) => {
+  install: (app: App<Element>, options: IType, includes?: string[], extenders?: string[]) => {
+    console.log(extenders)
+
     const { prefix, baseParams } = options
-    getVisitor(app, prefix || 'track', baseParams || {})
+    getVisitor(app, prefix || 'track', baseParams || {}, includes, extenders)
     app.directive('click', {
       mounted: (el, bind) => {
         el.addEventListener('click', () => {
